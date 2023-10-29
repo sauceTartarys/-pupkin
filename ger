@@ -10,7 +10,7 @@ app.setStyleSheet("""
     }
 
     QPushButton {
-        background-color: #ff0000;
+        background-color: purple;
         color : #ffffff;
         border-radius: 5px ;
         border-color: #3232ff;
@@ -24,7 +24,7 @@ app.setStyleSheet("""
 
 
     QListWidget {
-        background-color: #141414 ;
+        background-color: blue ;
         color : #a0a0a0;
         font-size: 15px;
     }
@@ -32,7 +32,7 @@ app.setStyleSheet("""
 """)
 
 window = QWidget()
-window.resize(400 , 300)
+window.resize(800 , 550)
 
 mainline = QHBoxLayout()
 sline1 = QVBoxLayout()
@@ -45,7 +45,7 @@ buton4 = QPushButton('дзеркало')
 buton5 = QPushButton('різкість')
 buton6 = QPushButton('Ч/Б')
 pole = QListWidget()
-picture = QLabel('ніга буллшит')
+picture = QLabel('я ест грут')
 
 sline1.addWidget(buton1)
 sline1.addWidget(pole)
