@@ -1,4 +1,6 @@
-from PIL import Image
+from email.mime import image
+
+from PIL import Image, ImageFilter, ImageEnhance
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap, QImage
 from PyQt5.QtWidgets import *
@@ -65,6 +67,9 @@ buton3 = QPushButton('вправо')
 buton4 = QPushButton('дзеркало')
 buton5 = QPushButton('різкість')
 buton6 = QPushButton('Ч/Б')
+buton7 = QPushButton("яскравість")
+buton8 = QPushButton("насиченість")
+buton9 = QPushButton("тиснення")
 pole = QListWidget()
 picture = QLabel('я ест грут')
 
@@ -80,6 +85,9 @@ butonsline.addWidget(buton3)
 butonsline.addWidget(buton4)
 butonsline.addWidget(buton5)
 butonsline.addWidget(buton6)
+butonsline.addWidget(buton7)
+butonsline.addWidget(buton8)
+butonsline.addWidget(buton9)
 mainline.addLayout(sline1)
 mainline.addLayout(sline2)
 
@@ -95,27 +103,62 @@ class WorkPhoto:
     def showImage(self):
         pixel = pil2pixmap(self.image)
         pixel = pixel.scaled(800,600, Qt.KeepAspectRatio)
-        butonsline.setPixmap(pixel)
+        picture.setPixmap(pixel)
 
     def rotate_left(self):
         self.image = self.image.transpose(Image.ROTATE_90)
         self.showImage()
 
+    def rotate_right(self):
+        self.image = self.image.transpose(Image.ROTATE_270)
+        self.showImage()
+
+    def ikea(self):
+        self.image = Enhance.Color(self.image).enhance(1.5)
+        self.showImage()
+    def hygh(self):
+        self.image = self.image.transpose(Image.FLIP_LEFT_RIGHT)
+        self.showImage()
+
+    def hurea(self):
+        self.image = self.img.transpose(Image.FLIP_LEFT_RIGHT)
+        self.showImage()
+
+    def heta(self):
+        self.image = ImageEnhance.Brightness(self.image).enhance(1.5)
+        self.showImage()
+
+    def jes(self):
+        self.image = self.img = self.img.filter(self.imageFilter.EMBOSS)
+    def aye(self):
+        self.image = self.image.filter(ImageFilter.BLUR)
+        self.showImage()
+
+    def sexwe(self):
+        self.image = self.image.convert(("L"))
+        self.showImage()
+
 
 XDphoto = WorkPhoto()
 buton2.clicked.connect(XDphoto.rotate_left)
-
+buton3.clicked.connect(XDphoto.rotate_right)
+buton3.clicked.connect(XDphoto.hygh)
+buton5.clicked.connect(XDphoto.aye)
+buton6.clicked.connect(XDphoto.sexwe)
+buton7.clicked.connect(XDphoto.heta)
+buton8.clicked.connect(XDphoto.ikea)
+buton9.clicked.connect(XDphoto.jes)
 def open_folder():
     XDphoto.folder = QFileDialog.getExistingDirectory()
-    files = os.listdir()
+    files = os.listdir(XDphoto.folder)
     pole.clear()
     pole.addItems(files)
     print(XDphoto.folder)
 
 def showChosenImage():
-    pole.filename = pole.correntItem().text
-    pole.load()
-    pole.showImage()
+    XDphoto.filename = pole.currentItem().text()
+    XDphoto.load()
+    XDphoto.showImage()
 
 pole.currentRowChanged.connect(showChosenImage)
 
